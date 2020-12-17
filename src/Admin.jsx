@@ -8,11 +8,12 @@ export default function Admin() {
     noque: "",
     starttime: "",
     endtime: "",
-    totalmarks: "",
-    questions: []
+    totalmarks: ""
   });
-  const [question, setquestion] = useState({ question: "", options: null });
-  const [option, setoption] = useState([]);
+  const [quelist, setquelist] = useState([]);
+  const [question, setquestion] = useState("");
+  const [options, setoptions] = useState([]);
+  const [option, setoption] = useState("");
   const handledelete = (id) => {
     console.log(id);
     let list = testlist.filter((el) => el.id !== id);
@@ -25,19 +26,27 @@ export default function Admin() {
     testCopy[property] = event.target.value;
     settest(testCopy);
   };
-  const addquestion = (ev) => {
-    console.log(ev.target.value);
-    let copyquestion = { ...question.question };
+  const handlequestion = (ev) => {
+    let copyquestion = { ...question };
     copyquestion = ev.target.value;
     setquestion(copyquestion);
+    // console.log(copyquestion);
   };
-  const addoption = (index, event) => {
-    console.log(index);
-    let copyoption = [...option];
-    copyoption[index] = event.target.value;
-    setoption(copyoption);
-
-    console.log(option);
+  const addquestion = () => {
+    const copyque = [...quelist, question];
+    setquelist(copyque);
+    console.log(copyque);
+    setquestion("");
+  };
+  const addoption = (event) => {
+    setoption(event.target.value);
+  };
+  const addoptions = () => {
+    const addItem = [...options, option];
+    setoptions(addItem);
+    setquestion.opt(addItem);
+    setoption("");
+    console.log(addItem);
   };
   return (
     <div className="admin">
@@ -85,23 +94,27 @@ export default function Admin() {
         Question:
         <input
           placeholder="Enter question"
-          value={question.question}
-          onChange={(event) => addquestion(event)}
+          value={question}
+          onChange={(event) => handlequestion(event)}
           type="text"
         />
-        <button className="addquestion">Add</button>
+        <button className="addquestion" onClick={addquestion}>
+          Add
+        </button>
       </div>
       <div>
-        A:
+        options:
         <input
           placeholder="Enter option"
-          value={option[0]}
-          onChange={(event) => addoption(0, event)}
+          value={option}
+          onChange={(event) => addoption(event)}
           type="text"
         />
-        <button className="addopt">Add</button>
-      </div>{" "}
-      <div>
+        <button className="addopt" onClick={addoptions}>
+          Add
+        </button>
+      </div>
+      {/* <div>
         B:
         <input
           placeholder="Enter option"
@@ -111,25 +124,13 @@ export default function Admin() {
         />
         <button className="addopt">Add</button>
       </div>{" "}
+      */}
       <div>
-        C:
-        <input
-          placeholder="Enter option"
-          value={option[2]}
-          onChange={(event) => addoption(2, event)}
-          type="text"
-        />
-        <button className="addopt">Add</button>
-      </div>{" "}
-      <div>
-        D:
-        <input
-          placeholder="Enter option"
-          value={option[3]}
-          onChange={(event) => addoption(3, event)}
-          type="text"
-        />
-        <button className="addopt">Add</button>
+        <ol>
+          {quelist.map((el, index) => (
+            <li key={index}> {el}</li>
+          ))}
+        </ol>
       </div>
       <div>
         <ol className="ol">
