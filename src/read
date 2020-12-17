@@ -1,18 +1,10 @@
-The Quiz module will have 2 parts, a) Admin side form to upload quiz questions, b) User side flow where users can take a quiz.
+For admin access click on Admin icon
+then add the details about test like subject, starttime , endtime, and total no. of questions 
+PLease fill the details aboute question and options
+and then add options and then add Question otherwise it will give error
+After adding the all questions click on test complete
 
-Admin:
-1. Admin should be able to create a quiz. The quiz should have a quiz name, start and end date, number of questions.
-2. Admin should be able to add MCQ type questions to the quiz.
+User can see the list of exams 
+once if he start exam it will not stop.
+I set timer for each question 3seconds.
 
-User:
-1. Users should be able to take a quiz, answer the questions. Only one question will be visible at a time to the user, and the next user can navigate to the next question.
-2. At the end of the quiz before submitting an inline form should be displayed to take the user name, contact number.
-3. On submit save quiz answers along with user details (Mock POST call to save details to the backend, you can use a local store to save data).
-
-Notes:
-1. You have 5 Days to implement a solution after you receive this email, so we expect you to submit the result on 15h Dec. 2020.
-2. You can choose any UI framework, but it will be preferable to use ReactJs & Material UI/Bootstrap
-3. Write maintainable & modular code.
-4. Implement responsive UI compatible with mobile and web screens.
-5. Code should not have any local hardcoded path.
-6. Include a readme file with the required steps to set up the project and run the project on local.

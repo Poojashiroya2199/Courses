@@ -3,7 +3,6 @@ import tests from "./Data";
 export default function Admin() {
   const [testlist, settestlist] = useState(tests);
   const [test, settest] = useState({
-    id: "",
     subject: "",
     noque: "",
     starttime: "",
@@ -11,9 +10,25 @@ export default function Admin() {
     totalmarks: ""
   });
   const [quelist, setquelist] = useState([]);
+  const [optionlist, setoptlist] = useState([]);
   const [question, setquestion] = useState("");
   const [options, setoptions] = useState([]);
-  const [option, setoption] = useState("");
+  const [optiona, setoptiona] = useState("");
+  const [optionb, setoptionb] = useState("");
+  const [optionc, setoptionc] = useState("");
+  const [optiond, setoptiond] = useState("");
+  const addtest = () => {
+    let testscopy = [...testlist, test];
+    settestlist(testscopy);
+    console.log(testscopy);
+    settest({
+      subject: "",
+      noque: "",
+      starttime: "",
+      endtime: "",
+      totalmarks: ""
+    });
+  };
   const handledelete = (id) => {
     console.log(id);
     let list = testlist.filter((el) => el.id !== id);
@@ -33,20 +48,37 @@ export default function Admin() {
     // console.log(copyquestion);
   };
   const addquestion = () => {
+    if (!question) {
+      return;
+    }
     const copyque = [...quelist, question];
     setquelist(copyque);
     console.log(copyque);
     setquestion("");
   };
-  const addoption = (event) => {
-    setoption(event.target.value);
+  const handleoption = (index, event) => {
+    if (index === 0) {
+      setoptiona(event.target.value);
+    } else if (index === 1) {
+      setoptionb(event.target.value);
+    } else if (index === 2) {
+      setoptionc(event.target.value);
+    } else {
+      setoptiond(event.target.value);
+    }
   };
   const addoptions = () => {
+    let option = [optiona, optionb, optionc, optiond];
+
     const addItem = [...options, option];
     setoptions(addItem);
-    setquestion.opt(addItem);
-    setoption("");
     console.log(addItem);
+    setoptlist(addItem);
+    setoptiona("");
+    setoptionb("");
+    setoptionc("");
+    setoptiond("");
+    // console.log(addItem);
   };
   return (
     <div className="admin">
@@ -98,39 +130,74 @@ export default function Admin() {
           onChange={(event) => handlequestion(event)}
           type="text"
         />
-        <button className="addquestion" onClick={addquestion}>
-          Add
-        </button>
       </div>
       <div>
-        options:
+        A:
         <input
           placeholder="Enter option"
-          value={option}
-          onChange={(event) => addoption(event)}
+          value={optiona}
+          onChange={(event) => handleoption(0, event)}
           type="text"
-        />
-        <button className="addopt" onClick={addoptions}>
-          Add
-        </button>
+        />{" "}
       </div>
-      {/* <div>
+      <div>
         B:
         <input
           placeholder="Enter option"
-          value={option[1]}
-          onChange={(event) => addoption(1, event)}
+          value={optionb}
+          onChange={(event) => handleoption(1, event)}
+          type="text"
+        />{" "}
+      </div>
+      <div>
+        C:{" "}
+        <input
+          placeholder="Enter option"
+          value={optionc}
+          onChange={(event) => handleoption(2, event)}
           type="text"
         />
-        <button className="addopt">Add</button>
-      </div>{" "}
-      */}
+      </div>
       <div>
-        <ol>
-          {quelist.map((el, index) => (
-            <li key={index}> {el}</li>
-          ))}
-        </ol>
+        D:
+        <input
+          placeholder="Enter option"
+          value={optiond}
+          onChange={(event) => handleoption(3, event)}
+          type="text"
+        />
+      </div>
+      <div>
+        <button className="addopt" onClick={addoptions}>
+          Add Options
+        </button>
+        <button className="addquestion" onClick={addquestion}>
+          Add Question
+        </button>
+      </div>
+      <button onClick={addtest}>TEST COMPLETE</button>
+      <div className="currtest">
+        <div>{test.subject}</div>
+        <div>Start Time: {test.starttime}</div>
+        <div>End Time: {test.endtime}</div>
+        <div>Total No. of Questions: {test.noque}</div>
+        <div className="que">
+          <ol>
+            {quelist.map((el, index) => (
+              <div className="opt">
+                <li key={index}> {el}</li>
+
+                {optionlist[index].map((el, id) => (
+                  <>
+                    {id + 1}
+                    <button key={id}>{el}</button>
+                    <br />
+                  </>
+                ))}
+              </div>
+            ))}
+          </ol>
+        </div>
       </div>
       <div>
         <ol className="ol">
@@ -139,6 +206,7 @@ export default function Admin() {
               <li key={el.id} type="none">
                 {el.subject}
               </li>
+
               <p>No. of questions: {el.noque}</p>
               <p>Total marks: {el.totalmarks}</p>
               <p>Start time:{el.starttime}</p>
